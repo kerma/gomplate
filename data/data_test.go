@@ -20,6 +20,7 @@ func TestUnmarshalObj(t *testing.T) {
 		"foo":  map[string]interface{}{"bar": "baz"},
 		"one":  1.0,
 		"true": true,
+		"ip":   "127.0.0.1/32",
 	}
 
 	test := func(actual map[string]interface{}, err error) {
@@ -27,12 +28,14 @@ func TestUnmarshalObj(t *testing.T) {
 		assert.Equal(t, expected["foo"], actual["foo"], "foo")
 		assert.Equal(t, expected["one"], actual["one"], "one")
 		assert.Equal(t, expected["true"], actual["true"], "true")
+		assert.Equal(t, expected["ip"], actual["ip"], "127.0.0.1/32")
 	}
-	test(JSON(`{"foo":{"bar":"baz"},"one":1.0,"true":true}`))
+	test(JSON(`{"foo":{"bar":"baz"},"one":1.0,"true":true, "ip": "127.0.0.1\/32"}`))
 	test(YAML(`foo:
   bar: baz
 one: 1.0
 'true': true
+ip: 127.0.0.1/32
 `))
 	test(YAML(`anchor: &anchor
   bar: baz
@@ -40,6 +43,7 @@ foo:
   <<: *anchor
 one: 1.0
 'true': true
+ip: 127.0.0.1/32
 `))
 	test(YAML(`# this comment marks an empty (nil!) document
 ---
@@ -49,6 +53,7 @@ foo:
   bar: baz
 one: 1.0
 'true': true
+ip: 127.0.0.1/32
 `))
 
 	obj := make(map[string]interface{})

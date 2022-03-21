@@ -46,7 +46,7 @@ func unmarshalArray(obj []interface{}, in string, f func([]byte, interface{}) er
 // JSON - Unmarshal a JSON Object. Can be ejson-encrypted.
 func JSON(in string) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	out, err := unmarshalObj(obj, in, yaml.Unmarshal)
+	out, err := unmarshalObj(obj, in, json.Unmarshal)
 	if err != nil {
 		return out, err
 	}
